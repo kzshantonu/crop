@@ -23,7 +23,7 @@ else
     [[ -z ${version_gclone} ]] && exit 1
     version_rclone=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/rclone/rclone/tags" | jq -r .[0].name | sed s/v//)
     [[ -z ${version_rclone} ]] && exit 1
-    version_crop=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/l3uddz/crop/commits/develop" | jq -r .sha)
+    version_crop=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/l3uddz/crop/tags" | jq -r .[0].name | sed s/v//)
     [[ -z ${version_crop} ]] && exit 1
     echo "GCLONE_VERSION=${version_gclone}" > VERSION
     echo "RCLONE_VERSION=${version_rclone}" >> VERSION
