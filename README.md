@@ -23,6 +23,6 @@ The default `ENTRYPOINT` is `crop`.
 | ---------|--------------------------------|
 | latest   | The same as `stable`           |
 | stable   | Stable version                 |
-| unstable | Every commit to master branch  |
+| unstable | Every commit to develop branch |
 
 You can also find tags that reference a commit or version number.
