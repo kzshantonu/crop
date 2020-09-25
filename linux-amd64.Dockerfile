@@ -1,14 +1,29 @@
-FROM golang:alpine as builder
+FROM golang:alpine as rclone-builder
+ARG RCLONE_VERSION
+RUN apk add --no-cache git build-base bash && \
+    git clone -n https://github.com/rclone/rclone.git /rclone && cd /rclone && \
+    git checkout v${RCLONE_VERSION} -b hotio && \
+    make
 
-ARG VERSION
 
-RUN apk add --no-cache git build-base && \
-    git clone -n https://github.com/hotio/plexarr.git /plexarr && cd /plexarr && \
-    git checkout ${VERSION} -b hotio && \
-    make && \
-    chmod 755 /plexarr/dist/plexarr_linux_amd64/plexarr
+FROM golang:alpine as gclone-builder
+ARG GCLONE_VERSION
+RUN apk add --no-cache git build-base bash && \
+    git clone -n https://github.com/l3uddz/rclone.git /gclone && cd /gclone && \
+    git checkout ${GCLONE_VERSION} -b hotio && \
+    make
+
+
+FROM golang:alpine as crop-builder
+ARG CROP_VERSION
+RUN apk add --no-cache git build-base bash && \
+    git clone -n https://github.com/l3uddz/crop.git /crop && cd /crop && \
+    git checkout v${CROP_VERSION} -b hotio && \
+    make
+
 
 FROM alpine@sha256:a15790640a6690aa1730c38cf0a440e2aa44aaca9b0e8931a9f2b0d7cc90fd65
-ENTRYPOINT ["plexarr"]
-
-COPY --from=builder /plexarr/dist/plexarr_linux_amd64/plexarr /usr/local/bin/
+ENTRYPOINT ["crop"]
+COPY --from=rclone-builder /go/bin/rclone /usr/local/bin/rclone
+COPY --from=gclone-builder /go/bin/rclone /usr/local/bin/gclone
+COPY --from=crop-builder /crop/dist/crop_linux_amd64/crop /usr/local/bin/crop

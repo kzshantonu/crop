@@ -12,13 +12,21 @@ if [[ ${1} == "checkdigests" ]]; then
 elif [[ ${1} == "tests" ]]; then
     echo "Listing packages..."
     docker run --rm --entrypoint="" "${2}" apk -vv info | sort
-    echo "Show version info..."
-    docker run --rm --entrypoint="" "${2}" plexarr --version
-    echo "Show help info..."
-    docker run --rm --entrypoint="" "${2}" plexarr --help
+    echo "Show rclone version info..."
+    docker run --rm --entrypoint="" "${2}" rclone version
+    echo "Show gclone version info..."
+    docker run --rm --entrypoint="" "${2}" gclone version
+    echo "Show crop help info..."
+    docker run --rm --entrypoint="" "${2}" crop help
 else
-    version=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/l3uddz/plexarr/commits/master" | jq -r .sha)
-    [[ -z ${version} ]] && exit 1
-    echo "VERSION=${version}" > VERSION
-    echo "##[set-output name=version;]${version}"
+    version_gclone=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/l3uddz/rclone/commits/feat/sa-cycle" | jq -r .sha)
+    [[ -z ${version_gclone} ]] && exit 1
+    version_rclone=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/rclone/rclone/tags" | jq -r .[0].name | sed s/v//)
+    [[ -z ${version_rclone} ]] && exit 1
+    version_crop=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/l3uddz/crop/commits/develop" | jq -r .sha)
+    [[ -z ${version_crop} ]] && exit 1
+    echo "GCLONE_VERSION=${version_gclone}" > VERSION
+    echo "RCLONE_VERSION=${version_rclone}" >> VERSION
+    echo "CROP_VERSION=${version_crop}" >> VERSION
+    echo "##[set-output name=version;]${version_crop}/${version_rclone}/${version_gclone}"
 fi
