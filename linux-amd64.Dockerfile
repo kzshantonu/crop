@@ -18,7 +18,7 @@ FROM golang:alpine as crop-builder
 ARG CROP_VERSION
 RUN apk add --no-cache git build-base bash && \
     git clone -n https://github.com/l3uddz/crop.git /crop && cd /crop && \
-    git checkout v${CROP_VERSION} -b hotio && \
+    git checkout ${CROP_VERSION} -b hotio && \
     make
 
 
