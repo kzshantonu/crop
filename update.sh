@@ -27,6 +27,6 @@ else
     [[ -z ${version_crop} ]] && exit 1
     echo "GCLONE_VERSION=${version_gclone}" > VERSION
     echo "RCLONE_VERSION=${version_rclone}" >> VERSION
-    echo "CROP_VERSION=${version_crop}" >> VERSION
+    echo "VERSION=${version_crop}" >> VERSION
     echo "##[set-output name=version;]${version_crop}/${version_rclone}/${version_gclone}"
 fi
