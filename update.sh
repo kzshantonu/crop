@@ -28,5 +28,6 @@ else
     echo "GCLONE_VERSION=${version_gclone}" > VERSION
     echo "RCLONE_VERSION=${version_rclone}" >> VERSION
     echo "VERSION=${version_crop}" >> VERSION
+    echo '{"version":"'"${version_crop}"'"}' > VERSION.json
     echo "##[set-output name=version;]${version_crop}/${version_rclone}/${version_gclone}"
 fi
