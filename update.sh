@@ -23,7 +23,7 @@ else
     [[ -z ${version_gclone} ]] && exit 1
     version_rclone=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/rclone/rclone/tags" | jq -r .[0].name | sed s/v//)
     [[ -z ${version_rclone} ]] && exit 1
-    version_crop=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/l3uddz/crop/commits/develop" | jq -r .sha)
+    version_crop=$(curl -u "${GITHUB_ACTOR}:${GITHUB_TOKEN}" -fsSL "https://api.github.com/repos/l3uddz/crop/commits/master" | jq -r .sha)
     [[ -z ${version_crop} ]] && exit 1
     echo '{"version":"'"${version_crop}"'","gclone_version":"'"${version_gclone}"'","rclone_version":"'"${version_rclone}"'"}' | jq . > VERSION.json
     echo "##[set-output name=version;]${version_crop}/${version_rclone}/${version_gclone}"
