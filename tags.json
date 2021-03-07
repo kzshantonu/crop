@@ -18,7 +18,7 @@
       "name": "nightly",
       "version": "294b51ff23f229e16c8722bc530f87646812af33",
       "commit": "9c8dd6a",
-      "upstream": "Every commit to develop",
+      "upstream": "Every commit to master",
       "lastUpdated": "2021-03-07T05:35:58.382Z"
     }
   ],
