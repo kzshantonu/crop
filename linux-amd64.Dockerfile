@@ -27,3 +27,4 @@ ENTRYPOINT ["crop"]
 COPY --from=rclone-builder /go/bin/rclone /usr/local/bin/rclone
 COPY --from=gclone-builder /go/bin/rclone /usr/local/bin/gclone
 COPY --from=crop-builder /crop/dist/crop_linux_amd64/crop /usr/local/bin/crop
+RUN ln -s /usr/local/bin/gclone /usr/local/bin/lclone
