@@ -22,7 +22,7 @@ RUN apk add --no-cache git build-base bash && \
     make
 
 
-FROM alpine@sha256:73c155696fe65b68696e6ea24088693546ac468b3e14542f23f0efbde289cc97
+FROM alpine@sha256:1e014f84205d569a5cc3be4e108ca614055f7e21d11928946113ab3f36054801
 ENTRYPOINT ["crop"]
 COPY --from=rclone-builder /go/bin/rclone /usr/local/bin/rclone
 COPY --from=gclone-builder /go/bin/rclone /usr/local/bin/gclone
