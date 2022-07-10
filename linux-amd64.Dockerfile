@@ -1,4 +1,4 @@
-FROM golang:1.15-alpine3.12 as rclone-builder
+FROM golang:alpine as rclone-builder
 ARG RCLONE_VERSION
 RUN apk add --no-cache git build-base bash && \
     git clone -n https://github.com/rclone/rclone.git /rclone && cd /rclone && \
@@ -6,7 +6,7 @@ RUN apk add --no-cache git build-base bash && \
     make
 
 
-FROM golang:1.15-alpine3.12 as gclone-builder
+FROM golang:alpine as gclone-builder
 ARG GCLONE_VERSION
 RUN apk add --no-cache git build-base bash && \
     git clone -n https://github.com/l3uddz/rclone.git /gclone && cd /gclone && \
